@@ -1,3 +1,14 @@
+
+#include "Module.h"
+#include "ModuleWindow.h"
+#include "ModuleRender.h"
+#include "ModuleTextures.h"
+#include "ModuleInput.h"
+#include "ModuleAudio.h"
+#include "ModulePlayer.h"
+#include "ModulePhysics.h"
+#include "ModuleSceneIntro.h"
+
 #include "Application.h"
 
 Application::Application()
@@ -26,10 +37,8 @@ Application::Application()
 	// Scenes
 	AddModule(scene_intro);
 	
-	// Characters
+	// Player
 	AddModule(player);
-
-
 }
 
 Application::~Application()
