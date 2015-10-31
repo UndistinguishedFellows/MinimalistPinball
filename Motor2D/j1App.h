@@ -5,7 +5,7 @@
 #include "j1Module.h"
 #include "PugiXml\src\pugixml.hpp"
 
-// Modules
+// j1Modules
 class j1Window;
 class j1Input;
 class j1Render;
@@ -15,6 +15,7 @@ class j1FileSystem;
 class j1Scene;
 class j1Map;
 class j1PathFinding;
+class ModulePhysics;
 
 class j1App
 {
@@ -38,8 +39,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Add a new module to handle
-	void AddModule(j1Module* module);
+	// Add a new j1Module to handle
+	void Addj1Module(j1Module* j1Module);
 
 	// Exposing some properties for reading
 	int GetArgc() const;
@@ -56,19 +57,19 @@ private:
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
-	// Call modules before each loop iteration
+	// Call j1Modules before each loop iteration
 	void PrepareUpdate();
 
-	// Call modules before each loop iteration
+	// Call j1Modules before each loop iteration
 	void FinishUpdate();
 
-	// Call modules before each loop iteration
+	// Call j1Modules before each loop iteration
 	bool PreUpdate();
 
-	// Call modules on each loop iteration
+	// Call j1Modules on each loop iteration
 	bool DoUpdate();
 
-	// Call modules after each loop iteration
+	// Call j1Modules after each loop iteration
 	bool PostUpdate();
 
 	// Load / Save
@@ -77,7 +78,7 @@ private:
 
 public:
 
-	// Modules
+	// j1Modules
 	j1Window*			win;
 	j1Input*			input;
 	j1Render*			render;
@@ -85,12 +86,12 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1FileSystem*		fs;
-	j1Map*				map;
-	j1PathFinding*		pathfinding;
+	ModulePhysics*		physics;
+
 
 private:
 
-	p2List<j1Module*>	modules;
+	p2List<j1Module*>	j1Modules;
 	uint				frames;
 	float				dt;
 	int					argc;

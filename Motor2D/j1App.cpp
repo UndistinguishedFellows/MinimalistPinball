@@ -11,9 +11,8 @@
 #include "j1Audio.h"
 #include "j1Scene.h"
 #include "j1FileSystem.h"
-#include "j1Map.h"
-#include "j1Pathfinding.h"
 #include "j1App.h"
+#include "Physics\ModulePhysics.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -28,29 +27,28 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	fs = new j1FileSystem();
-	map = new j1Map();
-	pathfinding = new j1PathFinding();
+	physics = new ModulePhysics(this);
+
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
-	AddModule(fs);
-	AddModule(input);
-	AddModule(win);
-	AddModule(tex);
-	AddModule(audio);
-	AddModule(map);
-	AddModule(scene);
-	AddModule(pathfinding);
+	Addj1Module(fs);
+	Addj1Module(input);
+	Addj1Module(win);
+	Addj1Module(tex);
+	Addj1Module(audio);
+	Addj1Module(scene);
+	Addj1Module(physics);
 
 	// render last to swap buffer
-	AddModule(render);
+	Addj1Module(render);
 }
 
 // Destructor
 j1App::~j1App()
 {
-	// release modules
-	p2List_item<j1Module*>* item = modules.end;
+	// release j1Modules
+	p2List_item<j1Module*>* item = j1Modules.end;
 
 	while(item != NULL)
 	{
@@ -58,13 +56,13 @@ j1App::~j1App()
 		item = item->prev;
 	}
 
-	modules.clear();
+	j1Modules.clear();
 }
 
-void j1App::AddModule(j1Module* module)
+void j1App::Addj1Module(j1Module* j1Module)
 {
-	module->Init();
-	modules.add(module);
+	j1Module->Init();
+	j1Modules.add(j1Module);
 }
 
 // Called before render is available
@@ -90,7 +88,7 @@ bool j1App::Awake()
 	if(ret == true)
 	{
 		p2List_item<j1Module*>* item;
-		item = modules.start;
+		item = j1Modules.start;
 
 		while(item != NULL && ret == true)
 		{
@@ -107,7 +105,7 @@ bool j1App::Start()
 {
 	bool ret = true;
 	p2List_item<j1Module*>* item;
-	item = modules.start;
+	item = j1Modules.start;
 
 	while(item != NULL && ret == true)
 	{
@@ -173,19 +171,19 @@ void j1App::FinishUpdate()
 		LoadGameNow();
 }
 
-// Call modules before each loop iteration
+// Call j1Modules before each loop iteration
 bool j1App::PreUpdate()
 {
 	bool ret = true;
 	p2List_item<j1Module*>* item;
-	item = modules.start;
-	j1Module* pModule = NULL;
+	item = j1Modules.start;
+	j1Module* pj1Module = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = j1Modules.start; item != NULL && ret == true; item = item->next)
 	{
-		pModule = item->data;
+		pj1Module = item->data;
 
-		if(pModule->active == false) {
+		if(pj1Module->active == false) {
 			continue;
 		}
 
@@ -195,19 +193,19 @@ bool j1App::PreUpdate()
 	return ret;
 }
 
-// Call modules on each loop iteration
+// Call j1Modules on each loop iteration
 bool j1App::DoUpdate()
 {
 	bool ret = true;
 	p2List_item<j1Module*>* item;
-	item = modules.start;
-	j1Module* pModule = NULL;
+	item = j1Modules.start;
+	j1Module* pj1Module = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = j1Modules.start; item != NULL && ret == true; item = item->next)
 	{
-		pModule = item->data;
+		pj1Module = item->data;
 
-		if(pModule->active == false) {
+		if(pj1Module->active == false) {
 			continue;
 		}
 
@@ -217,18 +215,18 @@ bool j1App::DoUpdate()
 	return ret;
 }
 
-// Call modules after each loop iteration
+// Call j1Modules after each loop iteration
 bool j1App::PostUpdate()
 {
 	bool ret = true;
 	p2List_item<j1Module*>* item;
-	j1Module* pModule = NULL;
+	j1Module* pj1Module = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = j1Modules.start; item != NULL && ret == true; item = item->next)
 	{
-		pModule = item->data;
+		pj1Module = item->data;
 
-		if(pModule->active == false) {
+		if(pj1Module->active == false) {
 			continue;
 		}
 
@@ -243,7 +241,7 @@ bool j1App::CleanUp()
 {
 	bool ret = true;
 	p2List_item<j1Module*>* item;
-	item = modules.end;
+	item = j1Modules.end;
 
 	while(item != NULL && ret == true)
 	{
@@ -303,7 +301,7 @@ void j1App::SaveGame(const char* file) const
 // ---------------------------------------
 void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 {
-	// need to add functionality to file_system module for this to work
+	// need to add functionality to file_system j1Module for this to work
 }
 
 bool j1App::LoadGameNow()
@@ -327,7 +325,7 @@ bool j1App::LoadGameNow()
 
 			root = data.child("game_state");
 
-			p2List_item<j1Module*>* item = modules.start;
+			p2List_item<j1Module*>* item = j1Modules.start;
 			ret = true;
 
 			while(item != NULL && ret == true)
@@ -340,7 +338,7 @@ bool j1App::LoadGameNow()
 			if(ret == true)
 				LOG("...finished loading");
 			else
-				LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+				LOG("...loading process interrupted with error on j1Module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
 		}
 		else
 			LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
@@ -364,7 +362,7 @@ bool j1App::SavegameNow() const
 	
 	root = data.append_child("game_state");
 
-	p2List_item<j1Module*>* item = modules.start;
+	p2List_item<j1Module*>* item = j1Modules.start;
 
 	while(item != NULL && ret == true)
 	{
@@ -382,7 +380,7 @@ bool j1App::SavegameNow() const
 		LOG("... finished saving", save_game.GetString());
 	}
 	else
-		LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+		LOG("Save process halted from an error in j1Module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
 
 	data.reset();
 	want_to_save = false;

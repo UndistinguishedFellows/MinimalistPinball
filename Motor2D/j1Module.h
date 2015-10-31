@@ -10,6 +10,7 @@
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;
+class PhysBody;
 
 class j1Module
 {
@@ -70,6 +71,9 @@ public:
 	virtual bool Save(pugi::xml_node&) const
 	{
 		return true;
+	}
+	virtual void OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+	{
 	}
 
 public:
