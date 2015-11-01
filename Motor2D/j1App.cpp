@@ -386,3 +386,12 @@ bool j1App::SavegameNow() const
 	want_to_save = false;
 	return ret;
 }
+
+int j1App::getWidth() const
+{
+	return win->getWidth();
+}
+int j1App::getHeight() const
+{
+	return win->getHeight();
+}

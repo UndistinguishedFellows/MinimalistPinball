@@ -34,7 +34,7 @@ bool ModulePhysics::Awake(pugi::xml_node& config)
 
 	// Add all paths in configuration in order
 	gravity.x = config.child("gravity").attribute("x").as_float();
-	gravity.y = config.attribute("y").as_float;
+	gravity.y = config.child("gravity").attribute("y").as_float();
 
 	pixels_per_meter = config.child("pixels_per_meter").attribute("value").as_int();
 	meter_per_pixel = config.child("meter_per_pixel").attribute("value").as_float();
@@ -55,9 +55,9 @@ bool ModulePhysics::Start()
 	ground = world->CreateBody(&bd);
 
 	// big static circle as "ground" in the middle of the screen
-	int x = App->win.getWidth() / 2;
-	int y = SCREEN_HEIGHT / 1.5f;
-	int diameter = SCREEN_WIDTH / 2;
+	int x = App->getWidth() / 2;
+	int y = App->getHeight() / 1.5f;
+	int diameter = App->getWidth() / 2;
 
 	b2BodyDef body;
 	body.type = b2_staticBody;

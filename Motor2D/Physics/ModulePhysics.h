@@ -6,7 +6,8 @@
 
 
 
-
+#define PIXELS_PER_METER 50
+#define METER_PER_PIXEL 0.02
 
 #define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
@@ -46,6 +47,7 @@ public:
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
+
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
