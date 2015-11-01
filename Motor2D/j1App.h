@@ -40,7 +40,7 @@ public:
 	bool CleanUp();
 
 	// Add a new j1Module to handle
-	void Addj1Module(j1Module* j1Module);
+	void AddModule(j1Module* j1Module);
 
 	// Exposing some properties for reading
 	int GetArgc() const;

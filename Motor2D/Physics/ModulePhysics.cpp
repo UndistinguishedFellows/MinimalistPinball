@@ -15,6 +15,7 @@
 
 ModulePhysics::ModulePhysics(j1App* app, bool start_enabled) : j1Module()
 {
+	name.create("physics");
 	world = NULL;
 	mouse_joint = NULL;
 	debug = true;
@@ -25,11 +26,28 @@ ModulePhysics::~ModulePhysics()
 {
 }
 
+
+bool ModulePhysics::Awake(pugi::xml_node& config)
+{
+	LOG("Loading File System");
+	bool ret = true;
+
+	// Add all paths in configuration in order
+	gravity.x = config.child("gravity").attribute("x").as_float();
+	gravity.y = config.attribute("y").as_float;
+
+	pixels_per_meter = config.child("pixels_per_meter").attribute("value").as_int();
+	meter_per_pixel = config.child("meter_per_pixel").attribute("value").as_float();
+
+	return ret;
+}
+
+
 bool ModulePhysics::Start()
 {
 	LOG("Creating Physics 2D environment");
 
-	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
+	world = new b2World(b2Vec2(gravity.x, -gravity.y));
 	world->SetContactListener(this);
 
 	// needed to create joints like mouse joint
@@ -37,7 +55,7 @@ bool ModulePhysics::Start()
 	ground = world->CreateBody(&bd);
 
 	// big static circle as "ground" in the middle of the screen
-	int x = SCREEN_WIDTH / 2;
+	int x = App->win.getWidth() / 2;
 	int y = SCREEN_HEIGHT / 1.5f;
 	int diameter = SCREEN_WIDTH / 2;
 

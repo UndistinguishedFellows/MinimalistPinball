@@ -32,16 +32,16 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
-	Addj1Module(fs);
-	Addj1Module(input);
-	Addj1Module(win);
-	Addj1Module(tex);
-	Addj1Module(audio);
-	Addj1Module(scene);
-	Addj1Module(physics);
+	AddModule(fs);
+	AddModule(input);
+	AddModule(win);
+	AddModule(tex);
+	AddModule(audio);
+	AddModule(scene);
+	AddModule(physics);
 
 	// render last to swap buffer
-	Addj1Module(render);
+	AddModule(render);
 }
 
 // Destructor
@@ -59,7 +59,7 @@ j1App::~j1App()
 	j1Modules.clear();
 }
 
-void j1App::Addj1Module(j1Module* j1Module)
+void j1App::AddModule(j1Module* j1Module)
 {
 	j1Module->Init();
 	j1Modules.add(j1Module);
