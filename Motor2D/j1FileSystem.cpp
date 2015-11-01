@@ -169,3 +169,15 @@ unsigned int j1FileSystem::Save(const char* file, const char* buffer, unsigned i
 
 	return ret;
 }
+
+int j1FileSystem::getNumberOfNodes(const pugi::xml_node& node) const
+{
+	int ret = 0;
+	for (pugi::xml_node iterator = node.child("point"); 
+		iterator != NULL; 
+		iterator = iterator.next_sibling())
+	{
+		ret++;
+	}
+	return ret;
+}

@@ -11,7 +11,7 @@
 	</renderer>
 
 	<window>
-		<resolution width="1024" height="768" scale="1"/>
+		<resolution width="1024" height="1000" scale="1"/>
 		<fullscreen value="false"/>
 		<borderless value="false"/>
 		<resizable value="false"/>
@@ -25,7 +25,7 @@
 	</file_system>
 
 	<physics>
-		<gravity x="0" y="9.8" />	
+		<gravity x="0" y="-0.098" />	
 	</physics>
 
 	<scene>
@@ -96,7 +96,7 @@
 			<point x="51" y="469"/>
 		</chain>
 
-		<chain name="3">
+		<chain name="left-kicker">
 			<point x="78" y="786"/>
 			<point x="78" y="804"/>
 			<point x="79" y="812"/>
@@ -187,7 +187,7 @@
 			<point x="400" y="176"/>
 		</chain>
 
-		<chain name="6">
+		<chain name="border">
 			<point x="13" y="301"/>
 			<point x="19" y="249"/>
 			<point x="47" y="189"/>

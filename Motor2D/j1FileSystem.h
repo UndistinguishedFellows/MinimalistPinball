@@ -30,6 +30,8 @@ public:
 	{
 		return "save/";
 	}
+	int getNumberOfNodes(const pugi::xml_node& node) const;
+
 
 	// Open for Read/Write
 	unsigned int Load(const char* file, char** buffer) const;

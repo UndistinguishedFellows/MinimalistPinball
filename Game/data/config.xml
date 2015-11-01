@@ -11,7 +11,7 @@
 	</renderer>
 
 	<window>
-		<resolution width="1024" height="768" scale="1"/>
+		<resolution width="1024" height="1000" scale="1"/>
 		<fullscreen value="false"/>
 		<borderless value="false"/>
 		<resizable value="false"/>
@@ -25,7 +25,7 @@
 	</file_system>
 
 	<physics>
-		<gravity x="0" y="9.8" />	
+		<gravity x="0" y="-0.8" />	
 	</physics>
 
 	<scene>

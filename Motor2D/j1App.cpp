@@ -35,13 +35,15 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fs);
 	AddModule(input);
 	AddModule(win);
+	AddModule(physics);
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
-	AddModule(physics);
+	
 
 	// render last to swap buffer
 	AddModule(render);
+	
 }
 
 // Destructor
