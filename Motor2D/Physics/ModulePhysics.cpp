@@ -204,6 +204,12 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 	return pbody;
 }
 
+void ModulePhysics::DestroyBody(PhysBody* body)
+{
+	assert(body);
+	delete body;
+}
+
 // 
 bool ModulePhysics::PostUpdate()
 {

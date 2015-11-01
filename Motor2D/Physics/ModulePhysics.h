@@ -3,9 +3,6 @@
 #include "../p2Defs.h"
 #include "Box2D\Box2D\Box2D.h"
 
-
-
-
 #define PIXELS_PER_METER 50
 #define METER_PER_PIXEL 0.02
 
@@ -47,6 +44,8 @@ public:
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
+
+	void ModulePhysics::DestroyBody(PhysBody* body);
 
 
 	// b2ContactListener ---
