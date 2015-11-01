@@ -34,6 +34,7 @@ public:
 
 private:
 	SDL_Texture* debug_tex;
+	p2List<p2List<int>*>* chains;
 };
 
 #endif // __j1SCENE_H__

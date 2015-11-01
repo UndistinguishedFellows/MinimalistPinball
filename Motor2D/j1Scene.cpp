@@ -7,10 +7,13 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Scene.h"
+#include "j1FileSystem.h"
+#include "Physics\ModulePhysics.h"
 
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
+	chains = new p2List<p2List<int>*>();
 }
 
 // Destructor
@@ -21,6 +24,29 @@ j1Scene::~j1Scene()
 bool j1Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
+	App->render->camera.x = App->render->camera.y = 0;
+
+	for (pugi::xml_node iterator = config.child("chain"); 
+		iterator != NULL; 
+		iterator = iterator.next_sibling())
+	{ 
+		
+		LOG("-----------------------------------Chain Childs: %d", App->fs->getNumberOfNodes(iterator));
+		
+		p2List<int>* chain = new p2List<int>();
+		chains->add(chain);
+		for (pugi::xml_node pointIterator = iterator.child("point");
+			pointIterator != NULL;
+			pointIterator = pointIterator.next_sibling())
+		{
+			chains->end->data->add(pointIterator.attribute("x").as_int());
+			chains->end->data->add(pointIterator.attribute("y").as_int());
+		}
+	}
+
+	
+	
+
 	bool ret = true;
 
 	return ret;
@@ -29,8 +55,13 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-
-
+	for (p2List_item<p2List<int>*>* iterator = chains->start; 
+		iterator != NULL; 
+		iterator = iterator->next)
+	{
+		App->physics->CreateChain(0, 0, iterator->data, iterator->data->count(), b2_staticBody);
+	}
+	
 
 	return true;
 }
@@ -38,7 +69,7 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-
+	
 	
 	return true;
 }
@@ -46,6 +77,8 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 3);
 	return true;
 }
 
@@ -53,7 +86,7 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
-
+	
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
