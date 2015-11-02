@@ -12,6 +12,7 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1FileSystem;
+class j1Player;
 class j1Scene;
 class j1Map;
 class j1PathFinding;
@@ -86,6 +87,7 @@ public:
 	j1Render*			render;
 	j1Textures*			tex;
 	j1Audio*			audio;
+	j1Player*			player;
 	j1Scene*			scene;
 	j1FileSystem*		fs;
 	ModulePhysics*		physics;

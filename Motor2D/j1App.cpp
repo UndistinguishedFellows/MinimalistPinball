@@ -9,6 +9,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
+#include "j1Player.h"
 #include "j1Scene.h"
 #include "j1FileSystem.h"
 #include "j1App.h"
@@ -25,6 +26,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	render = new j1Render();
 	tex = new j1Textures();
 	audio = new j1Audio();
+	player = new j1Player(this);
 	scene = new j1Scene();
 	fs = new j1FileSystem();
 	physics = new ModulePhysics(this);
@@ -38,6 +40,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(physics);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(player);
 	AddModule(scene);
 	
 

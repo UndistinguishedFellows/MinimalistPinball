@@ -37,7 +37,9 @@
     <ClCompile Include="Physics\ModulePhysics.cpp">
       <Filter>Desenvolupament  ========\Modules\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="j1Player.cpp" />
+    <ClCompile Include="j1Player.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -94,7 +96,9 @@
     <ClInclude Include="Physics\ModulePhysics.h">
       <Filter>Desenvolupament  ========\Modules\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="j1Player.h" />
+    <ClInclude Include="j1Player.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
