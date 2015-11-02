@@ -30,194 +30,169 @@
 	</physics>
 
 	<scene>
-		<chain name="1" restitution = "1">
-			<point x="179" y="204"/>
-			<point x="106" y="174"/>
-			<point x="95" y="183"/>
-			<point x="84" y="194"/>
-			<point x="73" y="212"/>
-			<point x="66" y="227"/>
-			<point x="59" y="244"/>
-			<point x="54" y="265"/>
-			<point x="53" y="273"/>
-			<point x="53" y="287"/>
-			<point x="54" y="311"/>
-			<point x="56" y="332"/>
-			<point x="58" y="343"/>
-			<point x="62" y="357"/>
-			<point x="68" y="373"/>
-			<point x="76" y="385"/>
-			<point x="84" y="392"/>
-			<point x="89" y="395"/>
-			<point x="94" y="395"/>
-			<point x="97" y="393"/>
-			<point x="99" y="390"/>
-			<point x="100" y="386"/>
-			<point x="100" y="380"/>
-			<point x="97" y="364"/>
-			<point x="95" y="351"/>
-			<point x="90" y="330"/>
-			<point x="85" y="311"/>
-			<point x="80" y="286"/>
-			<point x="150" y="227"/>
-			<point x="187" y="229"/>
-			<point x="191" y="226"/>
-			<point x="194" y="221"/>
-			<point x="194" y="216"/>
-			<point x="192" y="211"/>
-			<point x="188" y="208"/>
-			<point x="188" y="208"/>
-			<point x="188" y="208"/>
+		<chain name="barritaSalvavidas" restitution = "1">
+			<point x="16" y="245"/>
+			<point x="21" y="291"/>
+			<point x="25" y="316"/>
+			<point x="34" y="353"/>
+			<point x="43" y="379"/>
+			<point x="57" y="412"/>
+			<point x="71" y="439"/>
 		</chain>
 
-		<chain name="2" restitution = "1">
-			<point x="46" y="456"/>
-			<point x="35" y="429"/>
-			<point x="30" y="425"/>
-			<point x="23" y="425"/>
-			<point x="19" y="429"/>
-			<point x="18" y="439"/>
-			<point x="17" y="553"/>
-			<point x="17" y="629"/>
-			<point x="19" y="635"/>
-			<point x="28" y="640"/>
-			<point x="62" y="656"/>
-			<point x="70" y="657"/>
-			<point x="76" y="653"/>
-			<point x="76" y="648"/>
-			<point x="76" y="642"/>
-			<point x="55" y="589"/>
-			<point x="36" y="539"/>
-			<point x="36" y="534"/>
-			<point x="40" y="530"/>
-			<point x="64" y="505"/>
-			<point x="65" y="500"/>
-			<point x="51" y="469"/>
-			<point x="51" y="469"/>
-			<point x="51" y="469"/>
+		<chain name="chainDerecha" restitution = "1">
+			<point x="410" y="666"/>
+			<point x="410" y="773"/>
+			<point x="318" y="826"/>
 		</chain>
 
 		<chain name="left-kicker" restitution = "1">
-			<point x="78" y="786"/>
-			<point x="78" y="804"/>
-			<point x="79" y="812"/>
-			<point x="85" y="816"/>
-			<point x="124" y="839"/>
-			<point x="133" y="839"/>
-			<point x="140" y="836"/>
-			<point x="140" y="828"/>
-			<point x="133" y="805"/>
-			<point x="98" y="706"/>
-			<point x="92" y="702"/>
-			<point x="85" y="702"/>
-			<point x="79" y="706"/>
-			<point x="78" y="721"/>
-			<point x="78" y="758"/>
-			<point x="78" y="758"/>
-			<point x="78" y="758"/>
-			<point x="78" y="758"/>
+			<point x="97" y="646"/>
+			<point x="91" y="645"/>
+			<point x="82" y="647"/>
+			<point x="79" y="652"/>
+			<point x="80" y="752"/>
+			<point x="125" y="780"/>
+			<point x="132" y="781"/>
+			<point x="137" y="778"/>
+			<point x="141" y="774"/>
+			<point x="100" y="652"/>
 		</chain>
 
-		<chain name="4" restitution = "1">
-			<point x="392" y="614"/>
-			<point x="387" y="630"/>
-			<point x="381" y="647"/>
-			<point x="379" y="656"/>
-			<point x="384" y="659"/>
-			<point x="388" y="660"/>
-			<point x="399" y="657"/>
-			<point x="415" y="646"/>
-			<point x="435" y="634"/>
-			<point x="435" y="535"/>
-			<point x="429" y="531"/>
-			<point x="423" y="531"/>
-			<point x="419" y="535"/>
-			<point x="402" y="585"/>
-			<point x="397" y="600"/>
-			<point x="397" y="600"/>
-			<point x="397" y="600"/>
+		<chain name="right-kicker" restitution = "1">
+			<point x="358" y="649"/>
+			<point x="364" y="644"/>
+			<point x="371" y="645"/>
+			<point x="377" y="648"/>
+			<point x="378" y="660"/>
+			<point x="377" y="752"/>
+			<point x="331" y="780"/>
+			<point x="322" y="780"/>
+			<point x="316" y="775"/>
+			<point x="355" y="656"/>
 		</chain>
 
-		<chain name="5" restitution = "1">
-			<point x="392" y="168"/>
-			<point x="382" y="158"/>
-			<point x="377" y="157"/>
-			<point x="371" y="158"/>
-			<point x="360" y="163"/>
-			<point x="349" y="168"/>
-			<point x="275" y="203"/>
-			<point x="271" y="209"/>
-			<point x="272" y="215"/>
-			<point x="278" y="217"/>
-			<point x="299" y="217"/>
-			<point x="374" y="278"/>
-			<point x="377" y="283"/>
-			<point x="374" y="297"/>
-			<point x="349" y="415"/>
-			<point x="348" y="422"/>
-			<point x="351" y="426"/>
-			<point x="360" y="430"/>
-			<point x="376" y="436"/>
-			<point x="383" y="436"/>
-			<point x="390" y="427"/>
-			<point x="396" y="409"/>
-			<point x="408" y="366"/>
-			<point x="410" y="273"/>
-			<point x="417" y="262"/>
-			<point x="426" y="258"/>
-			<point x="436" y="261"/>
-			<point x="443" y="268"/>
-			<point x="445" y="281"/>
-			<point x="442" y="431"/>
-			<point x="440" y="447"/>
-			<point x="437" y="467"/>
-			<point x="431" y="493"/>
-			<point x="426" y="512"/>
-			<point x="423" y="521"/>
-			<point x="425" y="526"/>
-			<point x="430" y="527"/>
-			<point x="457" y="527"/>
-			<point x="457" y="300"/>
-			<point x="453" y="262"/>
-			<point x="446" y="235"/>
-			<point x="433" y="212"/>
-			<point x="414" y="190"/>
-			<point x="400" y="176"/>
-			<point x="400" y="176"/>
-			<point x="400" y="176"/>
-			<point x="400" y="176"/>
+		<chain name="chainIzquierda" restitution = "1">
+			<point x="46" y="667"/>
+			<point x="47" y="774"/>
+			<point x="139" y="827"/>
+
 		</chain>
 
-		<chain name="border" restitution = "0.75">
-			<point x="13" y="301"/>
-			<point x="19" y="249"/>
-			<point x="47" y="189"/>
-			<point x="83" y="142"/>
-			<point x="122" y="112"/>
-			<point x="172" y="86"/>
-			<point x="229" y="74"/>
-			<point x="280" y="76"/>
-			<point x="329" y="86"/>
-			<point x="366" y="103"/>
-			<point x="407" y="130"/>
-			<point x="444" y="166"/>
-			<point x="477" y="225"/>
-			<point x="487" y="260"/>
-			<point x="493" y="291"/>
-			<point x="494" y="360"/>
-			<point x="494" y="899"/>
-			<point x="458" y="899"/>
-			<point x="457" y="534"/>
-			<point x="443" y="534"/>
-			<point x="443" y="873"/>
-			<point x="398" y="900"/>
-			<point x="305" y="959"/>
-			<point x="150" y="959"/>
-			<point x="12" y="877"/>
-			<point x="11" y="336"/>
-			<point x="11" y="336"/>
-			<point x="11" y="336"/>
+		<chain name="mesa" restitution = "1">
+			<point x="495" y="972"/>
+			<point x="495" y="244"/>
+			<point x="491" y="214"/>
+			<point x="481" y="176"/>
+			<point x="463" y="139"/>
+			<point x="444" y="109"/>
+			<point x="425" y="86"/>
+			<point x="399" y="63"/>
+			<point x="371" y="46"/>
+			<point x="340" y="33"/>
+			<point x="305" y="21"/>
+			<point x="273" y="18"/>
+			<point x="238" y="17"/>
+			<point x="205" y="21"/>
+			<point x="172" y="31"/>
+			<point x="130" y="51"/>
+			<point x="100" y="71"/>
+			<point x="71" y="100"/>
+			<point x="52" y="126"/>
+			<point x="36" y="155"/>
+			<point x="23" y="187"/>
+			<point x="14" y="223"/>
+			<point x="13" y="244"/>
+			<point x="13" y="819"/>
+			<point x="192" y="924"/>
+			<point x="203" y="975"/>
+			<point x="256" y="974"/>
+			<point x="264" y="923"/>
+			<point x="444" y="815"/>
+			<point x="444" y="476"/>
+			<point x="458" y="476"/>
+			<point x="458" y="971"/>
+		</chain>
 
+		<chain name="artefactoDerecho" restitution = "0.75">
+			<point x="384" y="603"/>
+			<point x="380" y="597"/>
+			<point x="420" y="475"/>
+			<point x="428" y="447"/>
+			<point x="435" y="421"/>
+			<point x="443" y="376"/>
+			<point x="446" y="218"/>
+			<point x="444" y="209"/>
+			<point x="433" y="202"/>
+			<point x="423" y="202"/>
+			<point x="415" y="207"/>
+			<point x="411" y="216"/>
+			<point x="410" y="300"/>
+			<point x="408" y="315"/>
+			<point x="397" y="354"/>
+			<point x="391" y="370"/>
+			<point x="385" y="378"/>
+			<point x="375" y="378"/>
+			<point x="352" y="368"/>
+			<point x="350" y="359"/>
+			<point x="377" y="229"/>
+			<point x="376" y="221"/>
+			<point x="299" y="158"/>
+			<point x="279" y="160"/>
+			<point x="272" y="156"/>
+			<point x="272" y="147"/>
+			<point x="371" y="100"/>
+			<point x="382" y="100"/>
+			<point x="428" y="146"/>
+			<point x="445" y="174"/>
+			<point x="454" y="204"/>
+			<point x="458" y="232"/>
+			<point x="459" y="469"/>
+			<point x="436" y="469"/>
+			<point x="437" y="576"/>
+			<point x="393" y="603"/>
+		</chain>
+		<chain name="artefactoIzquierdo" restitution = "0.75">
+			<point x="108" y="115"/>
+			<point x="193" y="151"/>
+			<point x="196" y="160"/>
+			<point x="191" y="170"/>
+			<point x="152" y="169"/>
+			<point x="81" y="227"/>
+			<point x="101" y="324"/>
+			<point x="100" y="334"/>
+			<point x="91" y="337"/>
+			<point x="78" y="328"/>
+			<point x="62" y="291"/>
+			<point x="56" y="254"/>
+			<point x="55" y="211"/>
+			<point x="65" y="171"/>
+			<point x="79" y="144"/>
+			<point x="99" y="122"/>
+		</chain>
+
+		<chain name="artefactoIzquierdoMedio" restitution = "0.75">
+			<point x="18" y="372"/>
+			<point x="19" y="577"/>
+			<point x="63" y="598"/>
+			<point x="70" y="598"/>
+			<point x="76" y="595"/>
+			<point x="77" y="587"/>
+			<point x="36" y="477"/>
+			<point x="66" y="448"/>
+			<point x="34" y="369"/>
+			<point x="28" y="366"/>
+			<point x="22" y="367"/>
+		</chain>
+
+		<chain name="barreraDerecha" restitution = "0.75">
+			<point x="396" y="66"/>
+			<point x="380" y="95"/>
+		</chain>
+
+		<chain name="barreraIzquierda" restitution = "0.75">
+			<point x="90" y="85"/>
+			<point x="107" y="112"/>
 		</chain>
 
 	</scene>

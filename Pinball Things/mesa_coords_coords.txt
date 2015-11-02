@@ -1,0 +1,4 @@
+// Pivot 0, 0
+int mesa_coords[2] = {
+	402, 569
+};
