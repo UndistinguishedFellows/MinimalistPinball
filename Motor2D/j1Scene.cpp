@@ -13,7 +13,7 @@
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
-	chains = new p2List<p2List<int>*>();
+	chains = new p2List<Chain*>();
 }
 
 // Destructor
@@ -31,16 +31,21 @@ bool j1Scene::Awake(pugi::xml_node& config)
 		iterator = iterator.next_sibling())
 	{ 
 		
-		LOG("-----------------------------------Chain Childs: %d", App->fs->getNumberOfNodes(iterator));
+		LOG("-----------------------------------Chain Childs: %d", 
+			App->fs->getNumberOfNodes(iterator));
 		
-		p2List<int>* chain = new p2List<int>();
+		Chain* chain = new Chain();
+		p2List<int>* points = new p2List<int>();
+		chain->points = points;
 		chains->add(chain);
+		chains->end->data->restitution = iterator.attribute("restitution").as_float();
+
 		for (pugi::xml_node pointIterator = iterator.child("point");
 			pointIterator != NULL;
 			pointIterator = pointIterator.next_sibling())
 		{
-			chains->end->data->add(pointIterator.attribute("x").as_int());
-			chains->end->data->add(pointIterator.attribute("y").as_int());
+			chains->end->data->points->add(pointIterator.attribute("x").as_int());
+			chains->end->data->points->add(pointIterator.attribute("y").as_int());
 		}
 	}
 
@@ -55,11 +60,14 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	for (p2List_item<p2List<int>*>* iterator = chains->start; 
+	for (p2List_item<Chain*>* iterator = chains->start; 
 		iterator != NULL; 
 		iterator = iterator->next)
 	{
-		App->physics->CreateChain(0, 0, iterator->data, iterator->data->count(), b2_staticBody);
+		App->physics->CreateChain(0, 0, 
+			iterator->data->points, 
+			iterator->data->points->count(), b2_staticBody, 
+			iterator->data->restitution);
 	}
 	
 
@@ -78,7 +86,7 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 3);
+		App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15);
 	return true;
 }
 

@@ -26,10 +26,11 @@
 
 	<physics>
 		<gravity x="0" y="-0.098" />	
+		<fps value="30" />
 	</physics>
 
 	<scene>
-		<chain name="1">
+		<chain name="1" restitution = "1">
 			<point x="179" y="204"/>
 			<point x="106" y="174"/>
 			<point x="95" y="183"/>
@@ -69,7 +70,7 @@
 			<point x="188" y="208"/>
 		</chain>
 
-		<chain name="2">
+		<chain name="2" restitution = "1">
 			<point x="46" y="456"/>
 			<point x="35" y="429"/>
 			<point x="30" y="425"/>
@@ -96,7 +97,7 @@
 			<point x="51" y="469"/>
 		</chain>
 
-		<chain name="left-kicker">
+		<chain name="left-kicker" restitution = "1">
 			<point x="78" y="786"/>
 			<point x="78" y="804"/>
 			<point x="79" y="812"/>
@@ -117,7 +118,7 @@
 			<point x="78" y="758"/>
 		</chain>
 
-		<chain name="4">
+		<chain name="4" restitution = "1">
 			<point x="392" y="614"/>
 			<point x="387" y="630"/>
 			<point x="381" y="647"/>
@@ -137,7 +138,7 @@
 			<point x="397" y="600"/>
 		</chain>
 
-		<chain name="5">
+		<chain name="5" restitution = "1">
 			<point x="392" y="168"/>
 			<point x="382" y="158"/>
 			<point x="377" y="157"/>
@@ -187,7 +188,7 @@
 			<point x="400" y="176"/>
 		</chain>
 
-		<chain name="border">
+		<chain name="border" restitution = "0.75">
 			<point x="13" y="301"/>
 			<point x="19" y="249"/>
 			<point x="47" y="189"/>

@@ -5,7 +5,6 @@
 
 
 
-
 #define PIXELS_PER_METER 50
 #define METER_PER_PIXEL 0.02
 
@@ -13,6 +12,15 @@
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
 
 // Small class to return to other j1Modules to track position and rotation of physics bodies
+
+class Chain
+{
+public:
+	p2List<int>* points;
+	float restitution;
+};
+
+
 class PhysBody
 {
 public:
@@ -47,7 +55,7 @@ public:
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, b2BodyType type);
-	PhysBody* CreateChain(int x, int y, p2List<int>* points, int size, b2BodyType type);
+	PhysBody* CreateChain(int x, int y, p2List<int>* points, int size, b2BodyType type, float restitution);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
@@ -61,4 +69,5 @@ private:
 	b2Vec2 gravity;
 	int pixels_per_meter;
 	float meter_per_pixel;
+
 };

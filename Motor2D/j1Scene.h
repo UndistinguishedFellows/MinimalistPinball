@@ -5,6 +5,8 @@
 
 struct SDL_Texture;
 
+class Chain;
+
 class j1Scene : public j1Module
 {
 public:
@@ -34,7 +36,8 @@ public:
 
 private:
 	SDL_Texture* debug_tex;
-	p2List<p2List<int>*>* chains;
+	//p2List<p2List<int>*>* chains;
+	p2List<Chain*>* chains;
 };
 
 #endif // __j1SCENE_H__
