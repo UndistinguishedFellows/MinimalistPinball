@@ -223,7 +223,7 @@
 	</scene>
 	
 	<player>
-		<folder>data/textures/</folder>
+		<folder>data/textures</folder>
 		<ball src="ball.png" x="200" y="200" radius="15" />
 	</player>
 
