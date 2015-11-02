@@ -3,6 +3,8 @@
 #include "p2Defs.h"
 #include "p2Point.h"
 #include "j1Textures.h"
+#include "j1Render.h"
+
 
 class PhysBody;
 
@@ -15,6 +17,17 @@ struct Object
 	{}
 };
 
+struct InitPlayerValues
+{
+	p2SString	folder;
+
+	p2SString	ball_src;
+	int			init_ball_x;
+	int			init_ball_y;
+	int			ball_radius;
+
+};
+
 class j1Player : public j1Module
 {
 public:
@@ -23,12 +36,11 @@ public:
 	bool Awake(pugi::xml_node& config);
 
 	bool Start();
-	bool Update();
+	bool Update(float dt);
 	bool CleanUp();
 
 public:
 
 	Object ball;
-	p2SString folder;
-	pugi::xml_node init_player_values;
+	InitPlayerValues init_player_values;
 };

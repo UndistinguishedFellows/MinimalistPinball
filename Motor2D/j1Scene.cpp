@@ -70,6 +70,7 @@ bool j1Scene::Start()
 			iterator->data->restitution);
 	}
 	
+	mesa = App->tex->Load("data/textures/mesa_vacia.png");
 
 	return true;
 }
@@ -87,6 +88,8 @@ bool j1Scene::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15);
+
+	App->render->Blit(mesa, 0, 0);
 	return true;
 }
 

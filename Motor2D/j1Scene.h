@@ -34,6 +34,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	SDL_Texture* mesa;
+
 private:
 	SDL_Texture* debug_tex;
 	//p2List<p2List<int>*>* chains;
