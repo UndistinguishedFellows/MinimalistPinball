@@ -74,11 +74,12 @@ bool ModulePhysics::PreUpdate()
 	return true;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type, float restitution, bool bullet)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body.bullet = bullet;
 
 	b2Body* b = world->CreateBody(&body);
 
@@ -86,9 +87,11 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	shape.m_radius = PIXEL_TO_METERS(radius);
 	b2FixtureDef fixture;
 	//fixture.restitution = 1.0f;
-	fixture.shape = &shape;
-	b->CreateFixture(&fixture);
+	fixture.shape = &shape;	
+	fixture.density = 1.0f;
+	fixture.restitution = restitution;
 
+	b->CreateFixture(&fixture);
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
 	b->SetUserData(pbody);
@@ -173,7 +176,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, b2Body
 
 	b->CreateFixture(&fixture);
 
-	delete p;
+	RELEASE_ARRAY(p);
 
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
@@ -210,7 +213,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, p2List<int>* points, int size
 	fixture.restitution = restitution;
 	b->CreateFixture(&fixture);
 
-	delete p;
+	RELEASE_ARRAY(p);
 
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
