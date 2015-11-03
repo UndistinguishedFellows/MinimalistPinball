@@ -61,6 +61,7 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type = b2_dynamicBody, float restitution = 0.0f, bool bullet = false);
 
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
+	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, float angle);
 	PhysBody* CreateChain(int x, int y, int* points, int size, b2BodyType type, float restitution = 0);
 	PhysBody* CreateChain(int x, int y, p2List<int>* points, int size, b2BodyType type, float restitution = 0);
 

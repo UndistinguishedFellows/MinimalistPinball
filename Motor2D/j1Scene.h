@@ -46,13 +46,19 @@ private:
 	PhysBody* bumper1;
 	PhysBody* bumper2;
 	PhysBody* bumper3;
+	PhysBody* lkicker;
 
 	SDL_Texture* mesa;
 	SDL_Texture* bumper;
+	SDL_Texture* kicker;
+
+	uint bumper1Sound;
+
 
 	int bumper1Collision;
 	int bumper2Collision;
 	int bumper3Collision;
+	int lkickerCollision;
 };
 
 #endif // __j1SCENE_H__

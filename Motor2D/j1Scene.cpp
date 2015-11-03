@@ -76,15 +76,24 @@ bool j1Scene::Start()
 	bumper1 = App->physics->CreateCircle(281, 252, radius, b2_staticBody, 1.2f);
 	bumper2 = App->physics->CreateCircle(169, 252, radius, b2_staticBody, 1.2f);
 	bumper3 = App->physics->CreateCircle(224, 338, radius, b2_staticBody, 1.2f);
+	lkicker = App->physics->CreateRectangleSensor(120, 708, 10, 130, -19);
 	
 	bumper1->listener = this;
 	bumper2->listener = this;
 	bumper3->listener = this;
+	lkicker->listener = this;
 
 	mesa = App->tex->Load("data/textures/mesa_vacia.png");
 	bumper = App->tex->Load("data/textures/bumper.png");
+	kicker = App->tex->Load("data/textures/kicker.png");
+
+	bumper1Sound = App->audio->LoadFx("data/audio/fx/bumper.wav");
+
 
 	bumper1Collision = 0;
+	bumper2Collision = 0;
+	bumper3Collision = 0;
+	lkickerCollision = 0;
 
 	return true;
 }
@@ -136,8 +145,22 @@ bool j1Scene::Update(float dt)
 	}
 	else
 		bumper3Collision = 0;
+	if (lkickerCollision >= 1 && lkickerCollision <= 10)
+	{
+		App->render->Blit(kicker, 77, 643);
+		lkickerCollision++;
+	}
+	else
+		lkickerCollision = 0;
+	if (lkickerCollision >= 1 && lkickerCollision <= 10)
+	{
+		App->render->Blit(kicker, 77, 643);
+		lkickerCollision++;
+	}
+	else
+		lkickerCollision = 0;
 
-
+	
 	
 	return true;
 }
@@ -157,15 +180,23 @@ void j1Scene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	if (bodyA == bumper1 || bodyB == bumper1)
 	{		
-		bumper1Collision = 1;		
+		bumper1Collision = 1;
+		App->audio->PlayFx(bumper1Sound);
 	}
-	else if (bodyA == bumper2 || bodyB == bumper2)
+	if (bodyA == bumper2 || bodyB == bumper2)
 	{
 		bumper2Collision = 1;
+		App->audio->PlayFx(bumper1Sound);
 	}
-	else if (bodyA == bumper3 || bodyB == bumper3)
+	if (bodyA == bumper3 || bodyB == bumper3)
 	{
 		bumper3Collision = 1;
+		App->audio->PlayFx(bumper1Sound);
+	}
+	if (bodyA == lkicker || bodyB == lkicker)
+	{
+		lkickerCollision = 1;
+		App->audio->PlayFx(bumper1Sound);
 	}
 
 }
