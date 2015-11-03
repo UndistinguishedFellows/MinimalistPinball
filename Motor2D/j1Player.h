@@ -44,6 +44,10 @@ public:
 	Object ball;
 	Object plunger;
 	PhysBody* plunger_axis;
+	Object flipper1;
+	PhysBody* flipper1_axis;
+	Object flipper2;
+	PhysBody* flipper2_axis;
 	float plunger_force;
 
 	InitPlayerValues init_player_values;

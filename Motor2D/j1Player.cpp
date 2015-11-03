@@ -40,10 +40,26 @@ bool j1Player::Start()
 	//Plunger
 	plunger.image = App->tex->Load("data/textures/plunger.png");
 	plunger_force = 0.0f;
-	plunger.body = App->physics->CreateRectangle(476,950,35,35,true);
-	plunger_axis = App->physics->CreateRectangle(476,950,10,10,false);
-	App->physics->CreatePrismaticJoint(plunger.body, plunger_axis,false,0,100,true,100,2.0f,true);
+	plunger.body = App->physics->CreateRectangle(477,945,33,33,true);
+	plunger_axis = App->physics->CreateRectangle(477,945,10,10,false);
+	App->physics->CreatePrismaticJoint(plunger.body, plunger_axis,false,0,100,true,100,100.0f,true);
 
+	//Flippers
+	int flipper1_points[16] = {
+		1, 8,
+		9, 1,
+		73, 4,
+		79, 9,
+		79, 17,
+		74, 21,
+		10, 25,
+		1, 18
+	};
+
+	flipper1.image = App->tex->Load("pinball/flipper.png");
+	flipper1.body = App->physics->CreatePolygon(155,830,flipper1_points,16,b2_dynamicBody,0.2f);
+	flipper1_axis = App->physics->CreateRectangle(155, 830, 10, 10, false);
+	App->physics->CreateRevoluteJoint(flipper1.body, flipper1_axis,false,0,0,-30,0,true,0,180,10,10,true);
 	return true;
 }
 
@@ -77,7 +93,7 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		plunger_force += 2.0f;
+		plunger_force += 50.0f;
 		plunger.body->Push(0, plunger_force);
 	}
 	else{

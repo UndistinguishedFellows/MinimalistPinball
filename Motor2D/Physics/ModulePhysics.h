@@ -63,8 +63,10 @@ public:
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, b2BodyType type, float restitution = 0);
 	PhysBody* CreateChain(int x, int y, p2List<int>* points, int size, b2BodyType type, float restitution = 0);
+	PhysBody* CreatePolygon(int x, int y, int* points, int size, b2BodyType type, float restitution = 0);
 
 	void CreatePrismaticJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int low_trans, int up_trans, bool limits, int max_motor_force, float motor_speed, bool motor);
+	void ModulePhysics::CreateRevoluteJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int anchor_A_X, int anchor_A_Y, int anchor_B_X, int anchor_B_Y, bool limits, float lower_angle, float upper_angle, float torque, float motor_speed, bool motor);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
