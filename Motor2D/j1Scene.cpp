@@ -18,7 +18,9 @@ j1Scene::j1Scene() : j1Module()
 
 // Destructor
 j1Scene::~j1Scene()
-{}
+{
+	
+}
 
 // Called before render is available
 bool j1Scene::Awake(pugi::xml_node& config)
@@ -69,16 +71,29 @@ bool j1Scene::Start()
 			iterator->data->restitution);
 	}
 	
+	//TODO: Put this to xmlConfig
+	int radius = 27;
+	bumper1 = App->physics->CreateCircle(281, 252, radius, b2_staticBody, 1.2f);
+	bumper2 = App->physics->CreateCircle(169, 252, radius, b2_staticBody, 1.2f);
+	bumper3 = App->physics->CreateCircle(224, 338, radius, b2_staticBody, 1.2f);
+	lkicker = App->physics->CreateRectangleSensor(120, 708, 10, 130, -19);
 	
-	int radius = 30;
-	App->physics->CreateCircle(281, 248, radius, b2_staticBody, 1.5f);
-	App->physics->CreateCircle(169, 248, radius, b2_staticBody, 1.5f);
-	App->physics->CreateCircle(224, 334, radius, b2_staticBody, 1.5f);
-	
+	bumper1->listener = this;
+	bumper2->listener = this;
+	bumper3->listener = this;
+	lkicker->listener = this;
 
 	mesa = App->tex->Load("data/textures/mesa_vacia.png");
+	bumper = App->tex->Load("data/textures/bumper.png");
+	kicker = App->tex->Load("data/textures/kicker.png");
+
+	bumper1Sound = App->audio->LoadFx("data/audio/fx/bumper.wav");
 
 
+	bumper1Collision = 0;
+	bumper2Collision = 0;
+	bumper3Collision = 0;
+	lkickerCollision = 0;
 
 	return true;
 }
@@ -108,6 +123,45 @@ bool j1Scene::Update(float dt)
 	App->win->SetTitle(title.GetString());
 
 	App->render->Blit(mesa, 0, 4);
+
+	if (bumper1Collision >= 1 && bumper1Collision <= 10)
+	{
+		App->render->Blit(bumper, 280 - 27, 251 - 27);
+		bumper1Collision++;
+	}
+	else
+		bumper1Collision = 0;
+	if (bumper2Collision >= 1 && bumper2Collision <= 10)
+	{
+		App->render->Blit(bumper, 170 - 27, 251 - 27);
+		bumper2Collision++;
+	}
+	else
+		bumper2Collision = 0;
+	if (bumper3Collision >= 1 && bumper3Collision <= 10)
+	{
+		App->render->Blit(bumper, 223 - 27, 336 - 27);
+		bumper3Collision++;
+	}
+	else
+		bumper3Collision = 0;
+	if (lkickerCollision >= 1 && lkickerCollision <= 10)
+	{
+		App->render->Blit(kicker, 77, 643);
+		lkickerCollision++;
+	}
+	else
+		lkickerCollision = 0;
+	if (lkickerCollision >= 1 && lkickerCollision <= 10)
+	{
+		App->render->Blit(kicker, 77, 643);
+		lkickerCollision++;
+	}
+	else
+		lkickerCollision = 0;
+
+	
+	
 	return true;
 }
 
@@ -122,10 +176,37 @@ bool j1Scene::PostUpdate()
 	return ret;
 }
 
+void j1Scene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	if (bodyA == bumper1 || bodyB == bumper1)
+	{		
+		bumper1Collision = 1;
+		App->audio->PlayFx(bumper1Sound);
+	}
+	if (bodyA == bumper2 || bodyB == bumper2)
+	{
+		bumper2Collision = 1;
+		App->audio->PlayFx(bumper1Sound);
+	}
+	if (bodyA == bumper3 || bodyB == bumper3)
+	{
+		bumper3Collision = 1;
+		App->audio->PlayFx(bumper1Sound);
+	}
+	if (bodyA == lkicker || bodyB == lkicker)
+	{
+		lkickerCollision = 1;
+		App->audio->PlayFx(bumper1Sound);
+	}
+
+}
+
 // Called before quitting
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
+	RELEASE(bumper1);
+	RELEASE(bumper2);
+	RELEASE(bumper3);
 	return true;
 }
