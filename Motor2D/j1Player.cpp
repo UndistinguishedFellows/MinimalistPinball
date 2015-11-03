@@ -31,7 +31,10 @@ bool j1Player::Start()
 	LOG("Loading player");
 	//Ball
 	ball.image = App->tex->Load(PATH(init_player_values.folder.GetString(), init_player_values.ball_src.GetString()));
-	ball.body = App->physics->CreateCircle(init_player_values.init_ball_x, init_player_values.init_ball_y, init_player_values.ball_radius, b2_dynamicBody, 0.1f, true);
+	ball.body = App->physics->CreateCircle(init_player_values.init_ball_x, 
+		init_player_values.init_ball_y, 
+		init_player_values.ball_radius, 
+		b2_dynamicBody, 0.1f, true);
 	ball.body->listener = this;
 
 	//Plunger

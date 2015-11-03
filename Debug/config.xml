@@ -25,7 +25,7 @@
 	</file_system>
 
 	<physics>
-		<gravity x="0" y="-0.098" />	
+		<gravity x="0" y="-9.8" />	
 		<fps value="30" />
 	</physics>
 
@@ -91,7 +91,7 @@
 			<point x="45" y="668"/>
 		</chain>
 
-		<chain name="mesa" restitution = "1">
+		<chain name="mesa" restitution = "0.5">
 			<point x="495" y="972"/>
 			<point x="495" y="244"/>
 			<point x="491" y="214"/>
@@ -159,7 +159,7 @@
 			<point x="445" y="174"/>
 			<point x="454" y="204"/>
 			<point x="458" y="232"/>
-			<point x="459" y="469"/>
+			<point x="458" y="475"/>
 			<point x="436" y="469"/>
 			<point x="437" y="576"/>
 			<point x="393" y="603"/>
@@ -211,7 +211,7 @@
 	
 	<player>
 		<folder>data/textures/</folder>
-		<ball src="ball.png" x="200" y="200" radius="15" />
+		<ball src="ball.png" x="477" y="200" radius="15" />
 	</player>
 
 </config>

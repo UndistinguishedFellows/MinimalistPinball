@@ -5,8 +5,8 @@
 
 
 
-#define PIXELS_PER_METER 50
-#define METER_PER_PIXEL 0.02
+#define PIXELS_PER_METER 50.0f
+#define METER_PER_PIXEL 0.02f
 
 #define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
@@ -28,6 +28,7 @@ public:
 	{}
 
 	void GetPosition(int& x, int &y) const;
+	void SetPosition(int x, int y, float angle = 0.0f);
 	float GetRotation() const;
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
@@ -67,6 +68,11 @@ public:
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
+
+	b2World* GetWorld()
+	{
+		return world;
+	}
 
 private:
 

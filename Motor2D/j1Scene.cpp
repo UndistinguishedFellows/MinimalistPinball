@@ -50,7 +50,6 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	}
 	
 	
-	
 
 	bool ret = true;
 
@@ -70,11 +69,12 @@ bool j1Scene::Start()
 			iterator->data->restitution);
 	}
 	
+	
 	int radius = 30;
-
 	App->physics->CreateCircle(281, 248, radius, b2_staticBody, 1.5f);
 	App->physics->CreateCircle(169, 248, radius, b2_staticBody, 1.5f);
 	App->physics->CreateCircle(224, 334, radius, b2_staticBody, 1.5f);
+	
 
 	mesa = App->tex->Load("data/textures/mesa_vacia.png");
 
@@ -95,7 +95,7 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15.0f, b2_dynamicBody, 0.0f, true);
+		App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15.0f, b2_dynamicBody, 0.1f, true);
 
 	int x;
 
