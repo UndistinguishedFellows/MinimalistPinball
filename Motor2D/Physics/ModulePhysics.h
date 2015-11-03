@@ -92,6 +92,9 @@ public:
 	void CreateRevoluteJoint(PhysBody* body_1, PhysBody* body_2, int x_pivot_1 = 0, int y_pivot_1 = 0, int x_pivot_2 = 0, int y_pivot_2 = 0, int max_angle = INT_MAX, int min_angle = INT_MIN);
 	PhysBody* AddBody(int x, int y, int diameter, body_type type = b_dynamic, float density = 1.0f, float restitution = 0.0f, bool ccd = false, bool isSensor = false);
 	PhysBody* AddBody(const SDL_Rect& rect, int* points, uint count, body_type type = b_dynamic, float density = 1.0f, float restitution = 0.0f, bool isSensor = false);
+
+	void ModulePhysics::DeleteJoint(b2Joint* joint);
+
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
@@ -99,18 +102,19 @@ public:
 	{
 		return world;
 	}
-
+	b2MouseJoint* mouse_joint;
 private:
 
 	bool debug;
 	b2World* world;
-	b2MouseJoint* mouse_joint;
+
 	b2Body* ground;
 	b2Vec2 gravity;
 	int pixels_per_meter;
 	float meter_per_pixel;
 
-
+	b2Body* clicked;
+	b2Vec2 mouse_position;
 
 	p2List<PhysBody*> bodies;
 };
