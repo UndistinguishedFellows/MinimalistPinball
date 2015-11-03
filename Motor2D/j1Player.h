@@ -54,4 +54,8 @@ public:
 	float plunger_force;
 
 	InitPlayerValues init_player_values;
+
+
+	PhysBody* flipper1_wheel;
+
 };

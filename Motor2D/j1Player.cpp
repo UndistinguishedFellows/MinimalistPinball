@@ -45,6 +45,33 @@ bool j1Player::Start()
 	App->physics->CreatePrismaticJoint(plunger.body, plunger_axis,false,0,100,true,100,100.0f,true);
 
 	//Flippers
+	/*int flipper1_points[16] = {
+		1, 8,
+		9, 1,
+		73, 4,
+		79, 9,
+		79, 17,
+		74, 21,
+		10, 25,
+		1, 18
+	};*/
+
+	//flipper1.image = App->tex->Load("data/textures/flipper.png");
+	//flipper1.body = App->physics->CreatePolygon(141+500,827,flipper1_points,16,b2_dynamicBody,0.2f, 30.0f);
+	//flipper1_axis = App->physics->CreateCircle(146+500, 844, 5, b2_staticBody);
+	//flipper1_wheel = App->physics->CreateCircle(146 + 500, 844, 5, b2_staticBody);
+
+	/*flipper1.revoluteJoint = 
+		App->physics->CreateRevoluteJoint(flipper1.body, flipper1_axis,
+		flipper1.body->GetPosition(), flipper1_axis->GetPosition(), true, 90, 70, -150, 100);*/
+
+	//App->physics->CreateRevoluteJoint(flipper1.body, flipper1_wheel, 14, 17, 0, 0, 30, -30);
+
+
+		//CreateRevoluteJoint(flipper1.body, flipper1_axis,false,0,0,-30,0,false,180, 0, 100, -150, true);
+
+
+
 	int flipper1_points[16] = {
 		1, 8,
 		9, 1,
@@ -55,17 +82,27 @@ bool j1Player::Start()
 		10, 25,
 		1, 18
 	};
-
 	flipper1.image = App->tex->Load("data/textures/flipper.png");
-	flipper1.body = App->physics->CreatePolygon(141,827,flipper1_points,16,/*b2_dynamicBody*/b2_staticBody,0.2f, 30.0f);
-	flipper1_axis = App->physics->CreateRectangle(146, 844, 5, 5, false);
-
-	flipper1.revoluteJoint = 
-		App->physics->CreateRevoluteJoint(flipper1.body, flipper1_axis,
-		flipper1.body->GetPosition(), flipper1_axis->GetPosition(), true, 0, 70, -150, 100);
+	flipper1.body = App->physics->AddBody({ 132, 830, 0, 0 }, flipper1_points, 16, b_dynamic);
+	flipper1_wheel = App->physics->AddBody(132 + 14, 830 + 17, 10, b_static);
+	App->physics->CreateRevoluteJoint(flipper1.body, flipper1_wheel, 14, 17, 0, 0, 30, -30);
 
 
-		//CreateRevoluteJoint(flipper1.body, flipper1_axis,false,0,0,-30,0,false,180, 0, 100, -150, true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	return true;
 }
 
@@ -89,7 +126,9 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		flipper1.revoluteJoint->EnableMotor(true);
+		flipper1.body->Turn(-360);
+		//flipper1.body->body->ApplyAngularImpulse(360, true);
+		//flipper1.revoluteJoint;
 
 		int a = 0;
 	}
@@ -115,7 +154,7 @@ bool j1Player::Update(float dt)
 	plunger.body->GetPosition(x, y);
 	App->render->Blit(plunger.image, x, y);
 	flipper1.body->GetPosition(x, y);
-	App->render->Blit(flipper1.image, x-12, y+20, NULL, NULL, flipper1.body->GetRotation());
+	App->render->Blit(flipper1.image, x-12/*132*/, y+20/*840*/, NULL, NULL, flipper1.body->GetRotation(),134,840);
 
 	return true;
 }

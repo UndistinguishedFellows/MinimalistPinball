@@ -356,6 +356,115 @@ PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, b2Bo
 	return pbody;
 }
 
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+PhysBody* ModulePhysics::AddBody(const SDL_Rect& rect, int* points, uint count, body_type type, float density, float restitution, bool isSensor)
+{
+	b2BodyDef body;
+
+	switch (type)
+	{
+	case b_static:
+		body.type = b2_staticBody;
+		break;
+
+	case b_kinematic:
+		body.type = b2_kinematicBody;
+		break;
+
+	default:
+		body.type = b2_dynamicBody;
+		break;
+	}
+
+	body.position.Set(PIXEL_TO_METERS(rect.x), PIXEL_TO_METERS(rect.y));
+	body.angle = 0.0f;
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2PolygonShape shape;
+	b2Vec2* p = new b2Vec2[count / 2];
+	for (uint i = 0; i < count / 2; ++i)
+	{
+		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
+		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
+	}
+
+	shape.Set(p, count / 2);
+
+	b2FixtureDef box_fixture;
+	box_fixture.shape = &shape;
+	box_fixture.density = density;
+	box_fixture.restitution = restitution;
+	box_fixture.isSensor = isSensor;
+
+	b->CreateFixture(&box_fixture);
+
+	PhysBody* ret = new PhysBody(b, { rect.x, rect.y, rect.w, rect.h }, type);
+	bodies.add(ret);
+
+	delete[] p;
+
+	b->SetUserData(ret);
+
+	return ret;
+}
+
+PhysBody* ModulePhysics::AddBody(int x, int y, int diameter, body_type type, float density, float restitution, bool ccd, bool isSensor)
+{
+	b2BodyDef body;
+
+	switch (type)
+	{
+	case b_static:
+		body.type = b2_staticBody;
+		break;
+
+	case b_kinematic:
+		body.type = b2_kinematicBody;
+		break;
+
+	default:
+		body.type = b2_dynamicBody;
+		break;
+	}
+
+	float radius = PIXEL_TO_METERS(diameter) * 0.5f;
+
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body.angle = 0.0f;
+	body.bullet = ccd;
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2CircleShape shape;
+	shape.m_radius = radius;
+
+	b2FixtureDef box_fixture;
+	box_fixture.shape = &shape;
+	box_fixture.density = density;
+	box_fixture.restitution = restitution;
+	box_fixture.isSensor = isSensor;
+
+	b->CreateFixture(&box_fixture);
+
+	PhysBody* ret = new PhysBody(b, { x, y, diameter, diameter }, type);
+	bodies.add(ret);
+
+	b->SetUserData(ret);
+
+	return ret;
+}
+PhysBody::PhysBody(b2Body* body, const SDL_Rect& rect, body_type type) : body(body), rect(rect), type(type), listener(NULL)
+{}
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 void ModulePhysics::CreatePrismaticJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int low_trans, int up_trans, bool limits, int max_motor_force, float motor_speed, bool motor)
 {
 	b2PrismaticJointDef def;
@@ -400,7 +509,7 @@ b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(PhysBody* body_1, PhysBody* 
 	return (b2RevoluteJoint*)world->CreateJoint(&def);
 }*/
 
-b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(const PhysBody* a, const PhysBody* b, const b2Vec2& Center_a, const b2Vec2 Center_b, const bool limit, const int lowAngle, const int upAngle, const int motorSpeed, const int maxTorque)
+/*b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(const PhysBody* a, const PhysBody* b, const b2Vec2& Center_a, const b2Vec2 Center_b, const bool limit, const int lowAngle, const int upAngle, const int motorSpeed, const int maxTorque)
 {
 	b2RevoluteJointDef joint;
 	joint.bodyA = a->body;
@@ -414,7 +523,28 @@ b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(const PhysBody* a, const Phy
 	joint.maxMotorTorque = maxTorque;
 
 	return ((b2RevoluteJoint*)world->CreateJoint(&joint));
+}*/
+
+void ModulePhysics::CreateRevoluteJoint(PhysBody* body_1, PhysBody* body_2, int x_pivot_1, int y_pivot_1, int x_pivot_2, int y_pivot_2, int max_angle, int min_angle)
+{
+	b2RevoluteJointDef def;
+
+	def.bodyA = body_1->body;
+	def.bodyB = body_2->body;
+
+	def.localAnchorA.Set(PIXEL_TO_METERS(x_pivot_1), PIXEL_TO_METERS(y_pivot_1));
+	def.localAnchorB.Set(PIXEL_TO_METERS(x_pivot_2), PIXEL_TO_METERS(y_pivot_2));
+
+	if (max_angle != INT_MAX && min_angle != INT_MIN)
+	{
+		def.enableLimit = true;
+		def.upperAngle = DEGTORAD * max_angle;
+		def.lowerAngle = DEGTORAD * min_angle;
+	}
+
+	world->CreateJoint(&def);
 }
+
 
 // 
 bool ModulePhysics::PostUpdate()
