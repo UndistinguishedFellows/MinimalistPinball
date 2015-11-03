@@ -10,7 +10,7 @@
 
 
 # Build results
-#[Dd]ebug/
+[Dd]ebug/
 [Dd]ebugPublic/
 #[Rr]elease/
 [Rr]eleases/
@@ -55,7 +55,7 @@ dlldata.c
 *.tlh
 *.tmp
 *.tmp_proj
-*.log
+#*.log
 *.vspscc
 *.vssscc
 .builds
@@ -232,3 +232,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+*.tlog
