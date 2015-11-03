@@ -97,10 +97,15 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, bool dynamic)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	if (dynamic){
+		body.type = b2_dynamicBody;
+	}
+	else{
+		body.type = b2_staticBody;
+	}
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -218,6 +223,26 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, p2List<int>* points, int size
 	pbody->width = pbody->height = 0;
 
 	return pbody;
+}
+
+void ModulePhysics::CreatePrismaticJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int low_trans, int up_trans, bool limits, int max_motor_force, float motor_speed, bool motor)
+{
+	b2PrismaticJointDef def;
+	
+	def.bodyA = body_1->body;
+	def.bodyB = body_2->body;
+
+	def.localAxisA.Set(0, 1);
+
+	def.collideConnected = coll_conect;
+	def.lowerTranslation = PIXEL_TO_METERS(low_trans);
+	def.upperTranslation = PIXEL_TO_METERS(up_trans);
+	def.enableLimit = limits;
+	def.maxMotorForce = max_motor_force;
+	def.motorSpeed = motor_speed;
+	def.enableMotor = motor;
+
+	world->CreateJoint(&def);
 }
 
 // 

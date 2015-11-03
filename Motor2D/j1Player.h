@@ -42,5 +42,9 @@ public:
 public:
 
 	Object ball;
+	Object plunger;
+	PhysBody* plunger_axis;
+	float plunger_force;
+
 	InitPlayerValues init_player_values;
 };

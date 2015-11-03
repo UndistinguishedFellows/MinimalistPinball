@@ -199,7 +199,7 @@
 	
 	<player>
 		<folder>data/textures/</folder>
-		<ball src="ball.png" x="200" y="200" radius="15" />
+		<ball src="ball.png" x="477" y="200" radius="15" />
 	</player>
 
 </config>
