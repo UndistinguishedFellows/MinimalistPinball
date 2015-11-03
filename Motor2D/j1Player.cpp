@@ -111,15 +111,7 @@ bool j1Player::Start()
 	flipper2_wheel = App->physics->AddBody(314, 839, 10, b_static);
 	App->physics->CreateRevoluteJoint(flipper2.body, flipper2_wheel, 70, 13, 0, 0, 30, -30);
 
-	int flipper2_points[14] = {
-		326, 846,
-		322, 833,
-		309, 830,
-		256, 868,
-		256, 876,
-		265, 881,
-		319, 854
-	};
+	
 
 	flipper2.image = App->tex->Load("data/textures/flipper2.png");
 	flipper2.body = App->physics->AddBody({ 300, 830, 0, 0 }, flipper2_points, 14, b_dynamic);
