@@ -47,7 +47,7 @@ bool ModulePhysics::Start()
 {
 	LOG("Creating Physics 2D environment");
 
-	world = new b2World(b2Vec2(gravity.x, -gravity.y));
+	world = new b2World(b2Vec2(gravity.x, /*-gravity.y*/9.8f));
 	world->SetContactListener(this);
 
 	
