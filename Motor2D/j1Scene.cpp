@@ -107,7 +107,7 @@ bool j1Scene::Update(float dt)
 
 	App->win->SetTitle(title.GetString());
 
-	App->render->Blit(mesa, 0, 0);
+	App->render->Blit(mesa, 0, 4);
 	return true;
 }
 
