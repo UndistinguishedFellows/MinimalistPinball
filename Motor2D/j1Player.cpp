@@ -83,18 +83,32 @@ bool j1Player::Start()
 		1, 18
 	};
 	flipper1.image = App->tex->Load("data/textures/flipper.png");
-	flipper1.body = App->physics->AddBody({ 132, 830, 0, 0 }, flipper1_points, 16, b_dynamic);
-	flipper1_wheel = App->physics->AddBody(132 + 14, 830 + 17, 10, b_static);
+	flipper1.body = App->physics->AddBody({ 133, 830, 0, 0 }, flipper1_points, 16, b_dynamic);
+	flipper1_wheel = App->physics->AddBody(133 + 14, 830 + 13, 10, b_static);
 	App->physics->CreateRevoluteJoint(flipper1.body, flipper1_wheel, 14, 17, 0, 0, 30, -30);
 
 
-
-
-
-
-
-
-
+	
+	int flipper2_points[16] = {
+		78, 12,
+		73, 2,
+		58, 0,
+		5, 5,
+		0, 11,
+		5, 20,
+		67, 24,
+		77, 17
+	};
+/*
+	flipper2.image = App->tex->Load("data/textures/flipper2.png");
+	flipper2.body = App->physics->AddBody({300, 830, 0, 0 }, flipper2_points, 14, b_dynamic);
+	flipper2_wheel = App->physics->AddBody(300 + 79-14, 830 + 13, 10, b_static);
+	App->physics->CreateRevoluteJoint(flipper2.body, flipper2_wheel, 14, 17, 0, 0, -30, 30);
+	*/
+	flipper2.image = App->tex->Load("data/textures/flipper2.png");
+	flipper2.body = App->physics->AddBody({ 314, 839, 0, 0 }, flipper2_points, 16, b_dynamic);
+	flipper2_wheel = App->physics->AddBody(314, 839, 10, b_static);
+	App->physics->CreateRevoluteJoint(flipper2.body, flipper2_wheel, 70, 13, 0, 0, 30, -30);
 
 
 
@@ -135,7 +149,7 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-
+		flipper2.body->Turn(360);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
@@ -153,8 +167,12 @@ bool j1Player::Update(float dt)
 	App->render->Blit(ball.image, x, y);//, ball.body->GetAngle());
 	plunger.body->GetPosition(x, y);
 	App->render->Blit(plunger.image, x, y);
+
 	flipper1.body->GetPosition(x, y);
-	App->render->Blit(flipper1.image, x-12/*132*/, y+20/*840*/, NULL, NULL, flipper1.body->GetRotation(),134,840);
+	App->render->Blit(flipper1.image, x/*132*/, y/*840*/, NULL, NULL, flipper1.body->GetRotation(),0,0);
+
+	flipper2.body->GetPosition(x, y);
+	App->render->Blit(flipper2.image, x, y, NULL, NULL, flipper2.body->GetRotation(), 0, 0);
 
 	return true;
 }

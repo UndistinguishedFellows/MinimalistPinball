@@ -57,5 +57,6 @@ public:
 
 
 	PhysBody* flipper1_wheel;
+	PhysBody* flipper2_wheel;
 
 };

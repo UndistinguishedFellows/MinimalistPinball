@@ -134,7 +134,7 @@ bool j1Scene::Update(float dt)
 
 	App->win->SetTitle(title.GetString());
 
-	App->render->Blit(mesa, 0, 4);
+	//App->render->Blit(mesa, 0, 4);
 
 	if (bumper1Collision >= 1 && bumper1Collision <= 10)
 	{

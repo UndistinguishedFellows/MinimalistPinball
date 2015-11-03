@@ -196,7 +196,8 @@
 			<point x="28" y="366"/>
 			<point x="22" y="367"/>
 		</chain>
-
+		
+	<!--
 		<chain name="barreraDerecha" restitution = "0.2">
 			<point x="396" y="66"/>
 			<point x="380" y="95"/>
@@ -206,6 +207,8 @@
 			<point x="90" y="85"/>
 			<point x="107" y="112"/>
 		</chain>
+
+	-->
 
 	</scene>
 	
