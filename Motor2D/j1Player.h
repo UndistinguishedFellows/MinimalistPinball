@@ -41,7 +41,7 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
-
+	void CreateBall();
 public:
 
 	Object ball;

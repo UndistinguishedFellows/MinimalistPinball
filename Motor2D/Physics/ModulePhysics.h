@@ -37,10 +37,23 @@ public:
 	PhysBody(b2Body* body, const SDL_Rect& rect, body_type type);
 	void GetPosition(int& x, int &y) const;
 	b2Vec2 GetPosition() const;
-	void SetPosition(int x, int y, float angle = 0.0f);
+	//void SetPosition(int x, int y, float angle = 0.0f);
+	void PhysBody::SetPosition(int x, int y)
+	{
+		body->SetTransform(b2Vec2(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)), 0.0f);
+	}
 	float GetRotation() const;
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
+	void PhysBody::SetLinearSpeed(int x, int y)
+	{
+		body->SetLinearVelocity(b2Vec2(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)));
+	}
+
+	void PhysBody::SetAngularSpeed(float speed)
+	{
+		body->SetAngularVelocity(speed * DEGTORAD);
+	}
 	void Turn(int degrees)
 	{
 		body->ApplyAngularImpulse(DEGTORAD * degrees, true);
@@ -83,7 +96,7 @@ public:
 	PhysBody* CreateChain(int x, int y, p2List<int>* points, int size, b2BodyType type, float restitution = 0);
 	PhysBody* CreatePolygon(int x, int y, int* points, int size, b2BodyType type, float restitution = 0);
 	PhysBody* CreatePolygon(int x, int y, int* points, int size, b2BodyType type, float restitution = 0, float angle = 0);
-
+	void DeleteBody(PhysBody* body);
 	void CreatePrismaticJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int low_trans, int up_trans, bool limits, int max_motor_force, float motor_speed, bool motor);
 	/*b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int anchor_A_X, int anchor_A_Y, int anchor_B_X, int anchor_B_Y, bool limits, float lower_angle, float upper_angle, float torque, float motor_speed, bool motor);*/
 	b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(const PhysBody* a, const PhysBody* b, const b2Vec2& Center_a, const b2Vec2 Center_b, const bool limit, const int lowAngle, const int upAngle, const int motorSpeed, const int maxTorque);

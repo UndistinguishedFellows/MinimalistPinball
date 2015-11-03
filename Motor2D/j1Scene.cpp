@@ -9,6 +9,7 @@
 #include "j1Scene.h"
 #include "j1FileSystem.h"
 #include "Physics\ModulePhysics.h"
+#include "j1Player.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -78,20 +79,15 @@ bool j1Scene::Start()
 	bumper3 = App->physics->CreateCircle(224, 338, radius, b2_staticBody, 1.2f);
 	lkicker = App->physics->CreateRectangle(115, 708, 10, 130,false, -19,2.0f);
 	rkicker = App->physics->CreateRectangle(340, 708, 10, 130, false, 19, 2.0f);
-	lwall_act = App->physics->CreateRectangleSensor(127, 93, 10, 130, 19);
-	lwall_des = App->physics->CreateRectangleSensor(73, 121, 10, 130, -19);
-	rwall_act = App->physics->CreateRectangleSensor(350, 68, 10, 130, -19);
-	rwall_des = App->physics->CreateRectangleSensor(430, 130, 10, 130, 19);
+	
+	deadZone = App->physics->CreateRectangleSensor(227, 970, 150, 10, 0);
 	
 	bumper1->listener = this;
 	bumper2->listener = this;
 	bumper3->listener = this;
 	lkicker->listener = this;
 	rkicker->listener = this;
-	lwall_act->listener = this;
-	lwall_des->listener = this;
-	rwall_act->listener = this;
-	rwall_des->listener = this;
+	deadZone->listener = this;
 
 	mesa = App->tex->Load("data/textures/mesa_vacia.png");
 	bumper = App->tex->Load("data/textures/bumper.png");
@@ -106,6 +102,11 @@ bool j1Scene::Start()
 	bumper3Collision = 0;
 	lkickerCollision = 0;
 	rkickerCollision = 0;
+	
+	points = 0;
+	lives = 3;
+	dead = false;
+	respawn = false;
 
 	return true;
 }
@@ -121,20 +122,32 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+
+	p2SString title("Points: %d Life:%d", points, lives);
+
+	App->win->SetTitle(title.GetString());
+
+	if (lives == 0)
+	{
+		points = 0;
+			lives = 3;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN){
 		App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15.0f, b2_dynamicBody, 0.1f, true);
+	p2SString title("Mouse: (%d,%d)",
+		App->input->GetMouseX(), App->input->GetMouseY());
+
+	App->win->SetTitle(title.GetString());
+}
 
 	int x;
 
 	//App->win->SetTitle("(%d,%d)");
 	
 
-	p2SString title("Mouse: (%d,%d)", 
-		App->input->GetMouseX(), App->input->GetMouseY());
+	
 
-	App->win->SetTitle(title.GetString());
-
-	//App->render->Blit(mesa, 0, 4);
+	App->render->Blit(mesa, 0, 4);
 
 	if (bumper1Collision >= 1 && bumper1Collision <= 10)
 	{
@@ -172,7 +185,14 @@ bool j1Scene::Update(float dt)
 	else
 		rkickerCollision = 0;
 
-	
+	if (respawn)
+	{
+		App->physics->DeleteBody(App->player->ball.body);
+		App->player->CreateBall();
+		respawn = false;
+		dead = false;
+		//App->player->ball.body->rect//SetTransform(b2Vec2(PIXEL_TO_METERS(475), PIXEL_TO_METERS(298)), 0);
+	}
 	
 	return true;
 }
@@ -194,42 +214,45 @@ void j1Scene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{		
 		bumper1Collision = 1;
 		App->audio->PlayFx(bumper1Sound);
+		points += 10;
 	}
 	if (bodyA == bumper2 || bodyB == bumper2)
 	{
 		bumper2Collision = 1;
 		App->audio->PlayFx(bumper1Sound);
+		points += 10;
 	}
 	if (bodyA == bumper3 || bodyB == bumper3)
 	{
 		bumper3Collision = 1;
 		App->audio->PlayFx(bumper1Sound);
+		points += 10;
 	}
 	if (bodyA == lkicker || bodyB == lkicker)
 	{
 		lkickerCollision = 1;
 		App->audio->PlayFx(bumper1Sound);
+		points += 60;
 	}
 	if (bodyA == rkicker || bodyB == rkicker)
 	{
 		rkickerCollision = 1;
 		App->audio->PlayFx(bumper1Sound);
+		points += 60;
 	}
-	if (bodyA == lwall_act || bodyB == lwall_act)
+	
+	if (bodyA == deadZone || bodyB == deadZone)
 	{
-
-	}
-	if (bodyA == lwall_des || bodyB == lwall_des)
-	{
-
-	}
-	if (bodyA == rwall_act || bodyB == rwall_act)
-	{
-
-	}
-	if (bodyA == rwall_des || bodyB == rwall_des)
-	{
-
+		if (!dead)
+		{
+			dead = !dead;
+			lives--;
+			if (bodyA == App->player->ball.body && bodyB == deadZone || bodyA == deadZone && bodyB == App->player->ball.body)
+			{
+				respawn = !respawn;
+				
+			}
+		}
 	}
 
 }

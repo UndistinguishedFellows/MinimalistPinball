@@ -52,6 +52,7 @@ private:
 	PhysBody* rwall_act;
 	PhysBody* lwall_des;
 	PhysBody* rwall_des;
+	PhysBody* deadZone;
 
 	SDL_Texture* mesa;
 	SDL_Texture* bumper;
@@ -66,6 +67,10 @@ private:
 	int bumper3Collision;
 	int lkickerCollision;
 	int rkickerCollision;
+	int lives;
+	bool dead;
+	bool respawn;
+	int points;
 };
 
 #endif // __j1SCENE_H__

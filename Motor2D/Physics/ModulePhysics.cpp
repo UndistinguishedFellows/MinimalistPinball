@@ -18,7 +18,7 @@ ModulePhysics::ModulePhysics(j1App* app, bool start_enabled) : j1Module()
 	name.create("physics");
 	world = NULL;
 	mouse_joint = NULL;
-	debug = true;
+	debug = false;
 }
 
 // Destructor
@@ -734,4 +734,11 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
+}
+
+void ModulePhysics::DeleteBody(PhysBody* body)
+{
+	assert(body);
+	//delete body;
+	world->DestroyBody(body->body);
 }
