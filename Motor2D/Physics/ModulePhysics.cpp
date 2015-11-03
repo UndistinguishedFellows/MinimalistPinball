@@ -322,6 +322,40 @@ PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, b2Bo
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreatePolygon(int x, int y, int* points, int size, b2BodyType type, float restitution, float angle)
+{
+	b2BodyDef body;
+	body.type = type;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body.angle = DEGTORAD * angle;
+	b2Body* b = world->CreateBody(&body);
+
+	b2PolygonShape shape;
+	b2Vec2* p = new b2Vec2[size / 2];
+
+	for (uint i = 0; i < size / 2; ++i)
+	{
+		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
+		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
+	}
+
+	shape.Set(p, size / 2);
+
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+
+	b->CreateFixture(&fixture);
+
+	RELEASE_ARRAY(p);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = pbody->height = 0;
+
+	return pbody;
+}
+
 void ModulePhysics::CreatePrismaticJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int low_trans, int up_trans, bool limits, int max_motor_force, float motor_speed, bool motor)
 {
 	b2PrismaticJointDef def;
@@ -341,8 +375,8 @@ void ModulePhysics::CreatePrismaticJoint(PhysBody* body_1, PhysBody* body_2, boo
 
 	world->CreateJoint(&def);
 }
-
-void ModulePhysics::CreateRevoluteJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int anchor_A_X, int anchor_A_Y, int anchor_B_X, int anchor_B_Y, bool limits, float lower_angle, float upper_angle, float torque, float motor_speed, bool motor)
+/*
+b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int anchor_A_X, int anchor_A_Y, int anchor_B_X, int anchor_B_Y, bool limits, float lower_angle, float upper_angle, float torque, float motor_speed, bool motor)
 {
 	b2RevoluteJointDef def;
 
@@ -363,7 +397,23 @@ void ModulePhysics::CreateRevoluteJoint(PhysBody* body_1, PhysBody* body_2, bool
 	def.maxMotorTorque = torque;
 	def.enableMotor = motor;
 	
-	world->CreateJoint(&def);
+	return (b2RevoluteJoint*)world->CreateJoint(&def);
+}*/
+
+b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(const PhysBody* a, const PhysBody* b, const b2Vec2& Center_a, const b2Vec2 Center_b, const bool limit, const int lowAngle, const int upAngle, const int motorSpeed, const int maxTorque)
+{
+	b2RevoluteJointDef joint;
+	joint.bodyA = a->body;
+	joint.bodyB = b->body;
+	joint.localAnchorA = PIXEL_TO_METERS(Center_a);
+	joint.localAnchorB = PIXEL_TO_METERS(Center_b);
+	joint.enableLimit = limit;
+	joint.lowerAngle = lowAngle * DEGTORAD;
+	joint.upperAngle = upAngle * DEGTORAD;
+	joint.motorSpeed = motorSpeed;
+	joint.maxMotorTorque = maxTorque;
+
+	return ((b2RevoluteJoint*)world->CreateJoint(&joint));
 }
 
 // 
@@ -482,6 +532,11 @@ void PhysBody::GetPosition(int& x, int &y) const
 	b2Vec2 pos = body->GetPosition();
 	x = METERS_TO_PIXELS(pos.x) - (width);
 	y = METERS_TO_PIXELS(pos.y) - (height);
+}
+b2Vec2 PhysBody::GetPosition() const
+{
+	b2Vec2 pos = body->GetPosition();
+	return pos;
 }
 
 float PhysBody::GetRotation() const

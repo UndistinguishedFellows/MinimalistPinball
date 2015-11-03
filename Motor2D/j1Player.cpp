@@ -56,10 +56,16 @@ bool j1Player::Start()
 		1, 18
 	};
 
-	flipper1.image = App->tex->Load("pinball/flipper.png");
-	flipper1.body = App->physics->CreatePolygon(155,830,flipper1_points,16,b2_dynamicBody,0.2f);
-	flipper1_axis = App->physics->CreateRectangle(155, 830, 10, 10, false);
-	App->physics->CreateRevoluteJoint(flipper1.body, flipper1_axis,false,0,0,-30,0,true,0,180,10,10,true);
+	flipper1.image = App->tex->Load("data/textures/flipper.png");
+	flipper1.body = App->physics->CreatePolygon(141,827,flipper1_points,16,/*b2_dynamicBody*/b2_staticBody,0.2f, 30.0f);
+	flipper1_axis = App->physics->CreateRectangle(146, 844, 5, 5, false);
+
+	flipper1.revoluteJoint = 
+		App->physics->CreateRevoluteJoint(flipper1.body, flipper1_axis,
+		flipper1.body->GetPosition(), flipper1_axis->GetPosition(), true, 0, 70, -150, 100);
+
+
+		//CreateRevoluteJoint(flipper1.body, flipper1_axis,false,0,0,-30,0,false,180, 0, 100, -150, true);
 	return true;
 }
 
@@ -83,7 +89,9 @@ bool j1Player::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
+		flipper1.revoluteJoint->EnableMotor(true);
 
+		int a = 0;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
@@ -106,6 +114,8 @@ bool j1Player::Update(float dt)
 	App->render->Blit(ball.image, x, y);//, ball.body->GetAngle());
 	plunger.body->GetPosition(x, y);
 	App->render->Blit(plunger.image, x, y);
+	flipper1.body->GetPosition(x, y);
+	App->render->Blit(flipper1.image, x-12, y+20, NULL, NULL, flipper1.body->GetRotation());
 
 	return true;
 }
