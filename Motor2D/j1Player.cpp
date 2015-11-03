@@ -111,9 +111,20 @@ bool j1Player::Start()
 	flipper2_wheel = App->physics->AddBody(314, 839, 10, b_static);
 	App->physics->CreateRevoluteJoint(flipper2.body, flipper2_wheel, 70, 13, 0, 0, 30, -30);
 
+	int flipper2_points[14] = {
+		326, 846,
+		322, 833,
+		309, 830,
+		256, 868,
+		256, 876,
+		265, 881,
+		319, 854
+	};
 
-
-
+	flipper2.image = App->tex->Load("data/textures/flipper2.png");
+	flipper2.body = App->physics->AddBody({ 300, 830, 0, 0 }, flipper2_points, 14, b_dynamic);
+	flipper2_wheel = App->physics->AddBody(300 + 14, 830 + 17, 10, b_static);
+	App->physics->CreateRevoluteJoint(flipper2.body, flipper2_wheel, 14, 17, 0, 0, 30, -30);
 
 
 
@@ -184,7 +195,11 @@ bool j1Player::Update(float dt)
 	App->render->Blit(flipper1.image, x/*132*/, y/*840*/, NULL, NULL, flipper1.body->GetRotation(),0,0);
 
 	flipper2.body->GetPosition(x, y);
+//<<<<<<< HEAD
 	App->render->Blit(flipper2.image, x, y, NULL, NULL, flipper2.body->GetRotation(), 0, 0);
+//=======
+//	App->render->Blit(flipper2.image, x/*132*/, y/*840*/, //NULL, //NULL, flipper2.body->GetRotation(), 79, 0);
+//>>>>>>> origin/Chains*/
 
 	return true;
 }

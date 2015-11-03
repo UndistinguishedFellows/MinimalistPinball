@@ -50,6 +50,8 @@ bool ModulePhysics::Start()
 	world = new b2World(b2Vec2(gravity.x, /*-gravity.y*/9.8f));
 	world->SetContactListener(this);
 
+	b2BodyDef bd;
+	ground = world->CreateBody(&bd);
 	
 
 	return true;
@@ -624,10 +626,18 @@ bool ModulePhysics::PostUpdate()
 				}
 				break;
 			}
-
 			// TODO 1: If mouse button 1 is pressed ...
 			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
 			// test if the current body contains mouse position
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				b2Vec2 point(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()));
+				if (f->TestPoint(point))
+				{
+					clicked = f->GetBody();
+					LOG("Body clicked");
+				}
+			}
 		}
 	}
 
@@ -636,15 +646,50 @@ bool ModulePhysics::PostUpdate()
 	// TODO 2: If a body was selected, create a mouse joint
 	// using mouse_joint class property
 
+	if (clicked != NULL && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		mouse_position.x = PIXEL_TO_METERS(App->input->GetMouseX());
+		mouse_position.y = PIXEL_TO_METERS(App->input->GetMouseY());
+
+		b2MouseJointDef def;
+		def.bodyA = ground;
+		def.bodyB = clicked;
+		def.target = mouse_position;
+		def.dampingRatio = 0.5f;
+		def.frequencyHz = 2.0f;
+		def.maxForce = 100.0f * clicked->GetMass();
+		mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
+	}
 
 	// TODO 3: If the player keeps pressing the mouse button, update
 	// target position and draw a red line between both anchor points
 
+	if (clicked != NULL && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	{
+		mouse_position.x = PIXEL_TO_METERS(App->input->GetMouseX());
+		mouse_position.y = PIXEL_TO_METERS(App->input->GetMouseY());
+		mouse_joint->SetTarget(mouse_position);
+
+		App->render->DrawLine(mouse_position.x, mouse_position.y, clicked->GetPosition().x, clicked->GetPosition().y, 255, 0, 0, false);
+	}
+	
 	// TODO 4: If the player releases the mouse button, destroy the joint
+	
+	if (clicked != NULL && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+	{
+		clicked = NULL;
+
+		DeleteJoint(mouse_joint);
+	}
 
 	return true;
 }
 
+void ModulePhysics::DeleteJoint(b2Joint* joint)
+{
+	assert(joint);
+	world->DestroyJoint(joint);
+}
 
 // Called before quitting
 bool ModulePhysics::CleanUp()
