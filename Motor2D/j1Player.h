@@ -7,11 +7,14 @@
 
 
 class PhysBody;
+class b2RevoluteJoint;
 
 struct Object
 {
 	SDL_Texture* image;
 	PhysBody* body;
+	b2RevoluteJoint* revoluteJoint;
+
 
 	Object() : image(NULL), body(NULL)
 	{}

@@ -28,6 +28,7 @@ public:
 	{}
 
 	void GetPosition(int& x, int &y) const;
+	b2Vec2 GetPosition() const;
 	void SetPosition(int x, int y, float angle = 0.0f);
 	float GetRotation() const;
 	bool Contains(int x, int y) const;
@@ -65,9 +66,11 @@ public:
 	PhysBody* CreateChain(int x, int y, int* points, int size, b2BodyType type, float restitution = 0);
 	PhysBody* CreateChain(int x, int y, p2List<int>* points, int size, b2BodyType type, float restitution = 0);
 	PhysBody* CreatePolygon(int x, int y, int* points, int size, b2BodyType type, float restitution = 0);
+	PhysBody* CreatePolygon(int x, int y, int* points, int size, b2BodyType type, float restitution = 0, float angle = 0);
 
 	void CreatePrismaticJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int low_trans, int up_trans, bool limits, int max_motor_force, float motor_speed, bool motor);
-	void ModulePhysics::CreateRevoluteJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int anchor_A_X, int anchor_A_Y, int anchor_B_X, int anchor_B_Y, bool limits, float lower_angle, float upper_angle, float torque, float motor_speed, bool motor);
+	/*b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(PhysBody* body_1, PhysBody* body_2, bool coll_conect, int anchor_A_X, int anchor_A_Y, int anchor_B_X, int anchor_B_Y, bool limits, float lower_angle, float upper_angle, float torque, float motor_speed, bool motor);*/
+	b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(const PhysBody* a, const PhysBody* b, const b2Vec2& Center_a, const b2Vec2 Center_b, const bool limit, const int lowAngle, const int upAngle, const int motorSpeed, const int maxTorque);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
