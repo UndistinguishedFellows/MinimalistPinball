@@ -57,6 +57,7 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
+	PhysBody* CreateRectangle(int x, int y, int width, int height, bool dynamic, float angle, float restitution = 0);
 	PhysBody* CreateRectangle(int x, int y, int width, int height, bool dynamic);
 	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type = b2_dynamicBody, float restitution = 0.0f, bool bullet = false);
 

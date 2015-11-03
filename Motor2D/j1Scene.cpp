@@ -76,16 +76,27 @@ bool j1Scene::Start()
 	bumper1 = App->physics->CreateCircle(281, 252, radius, b2_staticBody, 1.2f);
 	bumper2 = App->physics->CreateCircle(169, 252, radius, b2_staticBody, 1.2f);
 	bumper3 = App->physics->CreateCircle(224, 338, radius, b2_staticBody, 1.2f);
-	lkicker = App->physics->CreateRectangleSensor(120, 708, 10, 130, -19);
+	lkicker = App->physics->CreateRectangle(115, 708, 10, 130,false, -19,2.0f);
+	rkicker = App->physics->CreateRectangle(340, 708, 10, 130, false, 19, 2.0f);
+	lwall_act = App->physics->CreateRectangleSensor(127, 93, 10, 130, 19);
+	lwall_des = App->physics->CreateRectangleSensor(73, 121, 10, 130, -19);
+	rwall_act = App->physics->CreateRectangleSensor(350, 68, 10, 130, -19);
+	rwall_des = App->physics->CreateRectangleSensor(430, 130, 10, 130, 19);
 	
 	bumper1->listener = this;
 	bumper2->listener = this;
 	bumper3->listener = this;
 	lkicker->listener = this;
+	rkicker->listener = this;
+	lwall_act->listener = this;
+	lwall_des->listener = this;
+	rwall_act->listener = this;
+	rwall_des->listener = this;
 
 	mesa = App->tex->Load("data/textures/mesa_vacia.png");
 	bumper = App->tex->Load("data/textures/bumper.png");
 	kicker = App->tex->Load("data/textures/kicker.png");
+	kicker2 = App->tex->Load("data/textures/kicker2.png");
 
 	bumper1Sound = App->audio->LoadFx("data/audio/fx/bumper.wav");
 
@@ -94,6 +105,7 @@ bool j1Scene::Start()
 	bumper2Collision = 0;
 	bumper3Collision = 0;
 	lkickerCollision = 0;
+	rkickerCollision = 0;
 
 	return true;
 }
@@ -152,13 +164,13 @@ bool j1Scene::Update(float dt)
 	}
 	else
 		lkickerCollision = 0;
-	if (lkickerCollision >= 1 && lkickerCollision <= 10)
+	if (rkickerCollision >= 1 && rkickerCollision <= 10)
 	{
-		App->render->Blit(kicker, 77, 643);
-		lkickerCollision++;
+		App->render->Blit(kicker2, 315, 643);
+		rkickerCollision++;
 	}
 	else
-		lkickerCollision = 0;
+		rkickerCollision = 0;
 
 	
 	
@@ -197,6 +209,27 @@ void j1Scene::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 		lkickerCollision = 1;
 		App->audio->PlayFx(bumper1Sound);
+	}
+	if (bodyA == rkicker || bodyB == rkicker)
+	{
+		rkickerCollision = 1;
+		App->audio->PlayFx(bumper1Sound);
+	}
+	if (bodyA == lwall_act || bodyB == lwall_act)
+	{
+
+	}
+	if (bodyA == lwall_des || bodyB == lwall_des)
+	{
+
+	}
+	if (bodyA == rwall_act || bodyB == rwall_act)
+	{
+
+	}
+	if (bodyA == rwall_des || bodyB == rwall_des)
+	{
+
 	}
 
 }
